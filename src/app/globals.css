@@ -1,7 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=JetBrains+Mono:wght@400;700&display=swap');
-@import '../styles/design.css';
-@import '../styles/animations.css';
-@import '../styles/utilities.css';
 
 :root {
   --c-neon-cyan: #22d3ee;
@@ -22,7 +19,6 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  -webkit-tap-highlight-color: transparent;
 }
 
 html,
@@ -32,7 +28,10 @@ body {
   background-color: var(--c-bg-dark);
   color: var(--c-text-primary);
   font-family: var(--font-primary);
-  height: 100%;
+}
+
+body {
+  position: relative;
 }
 
 a {
@@ -40,42 +39,237 @@ a {
   text-decoration: none;
 }
 
-button {
-  cursor: pointer;
-  border: none;
-  background: none;
-  font-family: inherit;
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
 }
 
-/* Utility Classes */
+/* Neon Text */
 .neon-text {
-  text-shadow: var(--glow-cyan);
   color: var(--c-neon-cyan);
+  text-shadow: var(--glow-cyan);
 }
 
-.neon-border {
-  border: 1px solid var(--c-neon-cyan);
-  box-shadow: var(--glow-cyan);
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
 }
 
-.glitch-wrapper {
-  position: relative;
-  overflow: hidden;
+::-webkit-scrollbar-track {
+  background: var(--c-bg-dark);
 }
 
+::-webkit-scrollbar-thumb {
+  background: var(--c-neon-cyan);
+  border-radius: 4px;
+}
+
+/* Scanline Overlay */
 .scanlines {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to bottom,
-      rgba(255, 255, 255, 0),
-      rgba(255, 255, 255, 0) 50%,
-      rgba(0, 0, 0, 0.2) 50%,
-      rgba(0, 0, 0, 0.2));
-  background-size: 100% 4px;
   pointer-events: none;
-  z-index: 999;
-  opacity: 0.6;
+  z-index: 1000;
+  background: linear-gradient(to bottom,
+      transparent 50%,
+      rgba(0, 0, 0, 0.1) 51%);
+  background-size: 100% 4px;
+  animation: scanline-move 8s linear infinite;
+  mix-blend-mode: overlay;
 }
+
+@keyframes scanline-move {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 0 100%;
+  }
+}
+
+/* === PARALLAX GRID & BACKGROUND ANIMATIONS === */
+
+/* 1. Cyber Grid Animation with Parallax */
+.perspective-grid {
+  perspective: 800px;
+  transform-style: preserve-3d;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.grid-plane {
+  width: 200%;
+  height: 200%;
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  background-image:
+    linear-gradient(rgba(34, 211, 238, 0.5) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.5) 2px, transparent 2px);
+  background-size: 60px 60px;
+  background-position: center bottom;
+  transform: rotateX(60deg);
+  animation: grid-move-parallax 10s linear infinite;
+  box-shadow: 0 0 100px rgba(34, 211, 238, 0.4);
+  mask-image: linear-gradient(to bottom, transparent 5%, black 40%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 5%, black 40%);
+  will-change: transform;
+}
+
+@keyframes grid-move-parallax {
+  0% {
+    transform: rotateX(60deg) translateY(0) translateZ(0);
+  }
+
+  100% {
+    transform: rotateX(60deg) translateY(60px) translateZ(20px);
+  }
+}
+
+/* Secondary Grid Layer for Depth */
+.grid-plane-secondary {
+  width: 200%;
+  height: 200%;
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  background-image:
+    linear-gradient(rgba(255, 0, 60, 0.2) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 0, 60, 0.2) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: center bottom;
+  transform: rotateX(65deg) translateZ(-50px);
+  animation: grid-move-parallax-slow 20s linear infinite;
+  opacity: 0.3;
+  mask-image: linear-gradient(to bottom, transparent 10%, black 50%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 10%, black 50%);
+}
+
+@keyframes grid-move-parallax-slow {
+  0% {
+    transform: rotateX(65deg) translateY(0) translateZ(-50px);
+  }
+
+  100% {
+    transform: rotateX(65deg) translateY(40px) translateZ(-50px);
+  }
+}
+
+/* 2. Floating Particles with varied speeds */
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--c-neon-cyan);
+  animation: float-particle linear infinite;
+}
+
+@keyframes float-particle {
+  0% {
+    transform: translateY(0) scale(0);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-100vh) scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* 3. Floating 3D Shapes with rotation */
+.shape-cube {
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(34, 211, 238, 0.05);
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.2);
+  animation: rotate-float 15s infinite linear;
+  transform-style: preserve-3d;
+}
+
+@keyframes rotate-float {
+  0% {
+    transform: rotate(0deg) translate(0, 0) rotateX(0deg) rotateY(0deg);
+  }
+
+  25% {
+    transform: rotate(90deg) translate(10px, -10px) rotateX(90deg) rotateY(45deg);
+  }
+
+  50% {
+    transform: rotate(180deg) translate(20px, -20px) rotateX(180deg) rotateY(90deg);
+  }
+
+  75% {
+    transform: rotate(270deg) translate(10px, -10px) rotateX(270deg) rotateY(135deg);
+  }
+
+  100% {
+    transform: rotate(360deg) translate(0, 0) rotateX(360deg) rotateY(180deg);
+  }
+}
+
+/* 4. Background Vignette with breathing effect */
+.bg-radial-gradient {
+  background: radial-gradient(circle at center, transparent 30%, #050510 100%);
+  animation: vignette-breathe 8s ease-in-out infinite;
+}
+
+@keyframes vignette-breathe {
+
+  0%,
+  100% {
+    background: radial-gradient(circle at center, transparent 30%, #050510 100%);
+    opacity: 0.9;
+  }
+
+  50% {
+    background: radial-gradient(circle at center, transparent 40%, #050510 95%);
+    opacity: 0.7;
+  }
+}
+
+/* 6. Glowing data streams */
+.data-stream {
+  position: absolute;
+  width: 2px;
+  height: 100px;
+  background: linear-gradient(to bottom, transparent, var(--c-neon-cyan), transparent);
+  animation: stream-fall linear infinite;
+  opacity: 0.6;
+  box-shadow: 0 0 10px var(--c-neon-cyan);
+}
+
+@keyframes stream-fall {
+  0% {
+    transform: translateY(-100vh);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.6;
+  }
+
+  90% {
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+/* Import other styles */
+@import './animations.css';
