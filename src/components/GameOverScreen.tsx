@@ -16,7 +16,8 @@ export default function GameOverScreen({ score, onRestart }: GameOverScreenProps
             <div className="fixed inset-0 pointer-events-none bg-red-500/10 mix-blend-overlay z-0 animate-pulse-glow"></div>
 
             <div className="relative z-10 space-y-6">
-                <h1 className="text-6xl font-black text-[var(--c-alert-red)] tracking-tighter glitch-wrapper" style={{ textShadow: "0 0 10px red" }}>
+                <h1 className="text-6xl font-black text-[var(--c-alert-red)] tracking-tighter glitch-wrapper element-3d"
+                    style={{ textShadow: "0 0 10px red, 2px 2px 0px #500000" }}>
                     SYSTEM BREACHED
                 </h1>
 
@@ -46,19 +47,19 @@ export default function GameOverScreen({ score, onRestart }: GameOverScreenProps
                 </button>
 
                 <a
-                    href="https://www.instagram.com/astracybersec"
+                    href="https://www.instagram.com/astra.ietm"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full py-3 border border-white/20 text-white hover:bg-white/10 rounded flex items-center justify-center gap-2"
+                    className="w-full py-3 border border-white/20 text-white hover:bg-white/10 rounded flex items-center justify-center gap-2 element-3d"
                 >
                     <span>📸</span> Follow ASTRA
                 </a>
 
                 <a
-                    href="https://astra-website-url" // Placeholder
+                    href="https://www.astraietm.in/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full py-3 border border-white/20 text-white hover:bg-white/10 rounded flex items-center justify-center gap-2"
+                    className="w-full py-3 border border-white/20 text-white hover:bg-white/10 rounded flex items-center justify-center gap-2 element-3d"
                 >
                     <span>🌐</span> Visit Website
                 </a>

@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   themeColor: '#050510',
 }
 
+import CyberBackground from '@/components/ui/CyberBackground'
+
 export default function RootLayout({
   children,
 }: {
@@ -16,7 +18,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/logo.png" type="image/png" />
+      </head>
       <body>
+        <CyberBackground />
         <div className="scanlines" />
         {children}
       </body>

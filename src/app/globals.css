@@ -5,15 +5,17 @@
 
 :root {
   --c-neon-cyan: #22d3ee;
-  /* Extracted from site */
+  /* Aligned with Astra Site - Main Theme */
+  --c-neon-primary: #FF003C;
+  /* Neon Red - Start Button Only */
   --c-bg-dark: #000000;
-  /* Extracted from site */
   --c-text-primary: #ffffff;
 
   --font-primary: 'Space Grotesk', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
   --glow-cyan: 0 0 10px rgba(34, 211, 238, 0.5), 0 0 20px rgba(34, 211, 238, 0.3);
+  --glow-primary: 0 0 10px rgba(255, 0, 60, 0.5), 0 0 20px rgba(255, 0, 60, 0.3);
 }
 
 * {

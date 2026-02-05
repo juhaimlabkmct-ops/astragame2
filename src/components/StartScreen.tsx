@@ -21,10 +21,10 @@ export default function StartScreen({ onStart }: StartScreenProps) {
 
             <button
                 onClick={onStart}
-                className="relative group px-12 py-4 bg-transparent border-2 border-[var(--c-neon-cyan)] text-[var(--c-neon-cyan)] font-bold text-xl uppercase tracking-widest overflow-hidden transition-all hover:bg-[var(--c-neon-cyan)] hover:text-black hover:shadow-[0_0_20px_var(--c-neon-cyan)] active:scale-95"
+                className="relative group px-12 py-5 bg-[var(--c-neon-primary)] text-white font-bold text-xl uppercase tracking-widest overflow-hidden transition-all hover:bg-white hover:text-[var(--c-neon-primary)] hover:shadow-[0_0_30px_var(--c-neon-primary)] active:scale-95 rounded-sm element-3d"
             >
                 <span className="relative z-10">Start Browsing</span>
-                <div className="absolute inset-0 bg-[var(--c-neon-cyan)]/20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                {/* <div className="absolute inset-0 bg-[var(--c-neon-primary)]/20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div> */}
             </button>
 
             <a

@@ -1,176 +1,88 @@
-/* Glitch Effect */
-@keyframes glitch-anim-1 {
-    0% {
-        clip-path: inset(20% 0 80% 0);
-        transform: translate(-2px, 1px);
-    }
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=JetBrains+Mono:wght@400;700&display=swap');
+@import './design.css';
+@import './utilities.css';
 
-    20% {
-        clip-path: inset(60% 0 10% 0);
-        transform: translate(2px, -1px);
-    }
+/* 3D & Animations */
 
-    40% {
-        clip-path: inset(40% 0 50% 0);
-        transform: translate(-2px, 2px);
-    }
+@keyframes float-3d {
 
-    60% {
-        clip-path: inset(80% 0 5% 0);
-        transform: translate(2px, -2px);
-    }
-
-    80% {
-        clip-path: inset(10% 0 70% 0);
-        transform: translate(-1px, 1px);
-    }
-
+    0%,
     100% {
-        clip-path: inset(30% 0 50% 0);
-        transform: translate(1px, -1px);
-    }
-}
-
-@keyframes glitch-anim-2 {
-    0% {
-        clip-path: inset(10% 0 60% 0);
-        transform: translate(2px, -1px);
-    }
-
-    20% {
-        clip-path: inset(80% 0 5% 0);
-        transform: translate(-2px, 2px);
-    }
-
-    40% {
-        clip-path: inset(30% 0 20% 0);
-        transform: translate(2px, 1px);
-    }
-
-    60% {
-        clip-path: inset(10% 0 80% 0);
-        transform: translate(-1px, -2px);
-    }
-
-    80% {
-        clip-path: inset(40% 0 30% 0);
-        transform: translate(1px, 2px);
-    }
-
-    100% {
-        clip-path: inset(70% 0 10% 0);
-        transform: translate(-2px, 1px);
-    }
-}
-
-/* Shake */
-@keyframes shake {
-    0% {
-        transform: translate(0, 0);
-    }
-
-    10% {
-        transform: translate(-5px, -5px);
-    }
-
-    20% {
-        transform: translate(5px, 5px);
-    }
-
-    30% {
-        transform: translate(-5px, 5px);
-    }
-
-    40% {
-        transform: translate(5px, -5px);
+        transform: translateY(0) rotateX(0deg);
     }
 
     50% {
-        transform: translate(-5px, 0);
-    }
-
-    60% {
-        transform: translate(5px, 0);
-    }
-
-    70% {
-        transform: translate(0, 5px);
-    }
-
-    80% {
-        transform: translate(0, -5px);
-    }
-
-    90% {
-        transform: translate(0, 0);
-    }
-
-    100% {
-        transform: translate(0, 0);
+        transform: translateY(-10px) rotateX(5deg);
     }
 }
 
-/* Pulse */
+.animate-float-3d {
+    animation: float-3d 6s ease-in-out infinite;
+}
+
 @keyframes pulse-glow {
-    0% {
-        box-shadow: 0 0 5px var(--c-neon-cyan);
+
+    0%,
+    100% {
         opacity: 0.8;
+        filter: drop-shadow(0 0 5px var(--c-neon-cyan));
     }
 
     50% {
-        box-shadow: 0 0 20px var(--c-neon-cyan);
         opacity: 1;
-    }
-
-    100% {
-        box-shadow: 0 0 5px var(--c-neon-cyan);
-        opacity: 0.8;
+        filter: drop-shadow(0 0 15px var(--c-neon-cyan));
     }
 }
 
-/* Scanline */
-@keyframes scanline {
-    0% {
-        top: -100%;
-    }
+.animate-pulse-glow {
+    animation: pulse-glow 3s infinite alternate;
+}
 
-    100% {
-        top: 100%;
-    }
+.perspective-container {
+    perspective: 1000px;
+}
+
+.element-3d {
+    transition: transform 0.3s ease;
+    transform-style: preserve-3d;
+}
+
+.element-3d:hover {
+    transform: rotateX(10deg) rotateY(5deg) scale(1.05);
 }
 
 @keyframes slide-up {
-    0% {
+    from {
+        opacity: 0;
         transform: translateY(20px);
-        opacity: 0;
     }
 
-    100% {
+    to {
+        opacity: 1;
         transform: translateY(0);
-        opacity: 1;
     }
 }
 
-@keyframes fade-in {
-    0% {
-        opacity: 0;
+.animate-slide-up {
+    animation: slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
     }
 
-    100% {
-        opacity: 1;
+    25% {
+        transform: translateX(-5px);
+    }
+
+    75% {
+        transform: translateX(5px);
     }
 }
 
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.05);
-    }
-
-    100% {
-        transform: scale(1);
-    }
+.animate-shake {
+    animation: shake 0.2s ease-in-out 3;
 }
