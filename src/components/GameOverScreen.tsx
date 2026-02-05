@@ -7,7 +7,7 @@ interface GameOverScreenProps {
 }
 
 export default function GameOverScreen({ score, onRestart }: GameOverScreenProps) {
-    const { rank, emoji } = checkRank(score);
+    const { rank, emoji, description } = checkRank(score);
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen w-full p-6 text-center animate-shake space-y-8 bg-red-900/10">
@@ -32,9 +32,10 @@ export default function GameOverScreen({ score, onRestart }: GameOverScreenProps
 
                 <div className="p-4 border border-[var(--c-neon-cyan)] bg-black/50 backdrop-blur-md rounded-xl">
                     <div className="text-xs text-[var(--c-neon-cyan)] uppercase mb-2">Cyber Rank Detected</div>
-                    <div className="text-3xl font-bold text-white">
+                    <div className="text-3xl font-bold text-white mb-2">
                         {rank} <span className="text-4xl">{emoji}</span>
                     </div>
+                    <div className="text-sm text-gray-400 italic">{description}</div>
                 </div>
             </div>
 
