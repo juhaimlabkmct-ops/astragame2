@@ -1,66 +1,58 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+
+import { useState, useEffect } from "react";
+import StartScreen from "@/components/StartScreen";
+import GameLoop from "@/components/GameLoop";
+import GameOverScreen from "@/components/GameOverScreen";
+import { audioManager } from "@/utils/audioManager";
+
+type GameState = "START" | "PLAYING" | "GAMEOVER";
 
 export default function Home() {
+  const [gameState, setGameState] = useState<GameState>("START");
+  const [finalScore, setFinalScore] = useState(0);
+
+  useEffect(() => {
+    // Play BGM on mount (will actally likely block until user interaction, so we try)
+    // Audio context requires user gesture. We'll play on "Start" button click.
+  }, []);
+
+  const handleStart = () => {
+    try {
+      audioManager.play("bgm");
+    } catch (e) {
+      console.error("Audio init failed", e);
+    }
+    setGameState("PLAYING");
+  };
+
+  const handleGameOver = (score: number) => {
+    setFinalScore(score);
+    setGameState("GAMEOVER");
+  };
+
+  const handleRestart = () => {
+    setGameState("PLAYING");
+  };
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <main className="min-h-screen w-full overflow-hidden bg-[var(--c-bg-dark)] text-white font-rajdhani">
+      {gameState === "START" && (
+        <StartScreen onStart={handleStart} />
+      )}
+
+      {gameState === "PLAYING" && (
+        <GameLoop onGameOver={handleGameOver} />
+      )}
+
+      {gameState === "GAMEOVER" && (
+        <GameOverScreen score={finalScore} onRestart={handleRestart} />
+      )}
+
+      {/* Footer attribution or version */}
+      <div className="fixed bottom-1 left-2 text-[10px] text-white/10 pointer-events-none z-0">
+        ASTRA ONE WRONG CLICK v1.0
+      </div>
+    </main>
   );
 }

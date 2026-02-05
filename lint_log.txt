@@ -1,0 +1,24 @@
+
+> astra-game@0.1.0 lint
+> eslint
+
+
+C:\Users\juhai\Downloads\astra  game 2\src\components\GameLoop.tsx
+  15:33  error  Error: Cannot call impure function during render
+
+`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\juhai\Downloads\astra  game 2\src\components\GameLoop.tsx:15:33
+  13 |     const [links, setLinks] = useState<LinkData[]>([]);
+  14 |     const [score, setScore] = useState(0);
+> 15 |     const startTimeRef = useRef(Date.now());
+     |                                 ^^^^^^^^^^ Cannot call impure function
+  16 |     const [elapsedTime, setElapsedTime] = useState(0);
+  17 |     const [isMuted, setIsMuted] = useState(false);
+  18 |  react-hooks/purity
+
+C:\Users\juhai\Downloads\astra  game 2\src\utils\audioManager.ts
+  14:60  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+Γ£û 2 problems (2 errors, 0 warnings)
+

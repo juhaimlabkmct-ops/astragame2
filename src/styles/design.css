@@ -1,0 +1,18 @@
+:root {
+  /* Colors */
+  --c-neon-cyan: #00f3ff;
+  --c-neon-blue: #0066ff;
+  --c-alert-red: #ff003c;
+  --c-bg-dark: #050510;
+  --c-bg-panel: #0a0a1a;
+  --c-text-primary: #ffffff;
+  --c-text-dim: #8899a6;
+  
+  /* Effects */
+  --glow-cyan: 0 0 10px var(--c-neon-cyan), 0 0 20px var(--c-neon-cyan);
+  --glow-red: 0 0 10px var(--c-alert-red), 0 0 20px var(--c-alert-red);
+  --scanline-color: rgba(0, 243, 255, 0.03);
+  
+  /* Fonts */
+  --font-mono: 'Courier New', Courier, monospace; /* Fallback, overridden by Next.js font */
+}
