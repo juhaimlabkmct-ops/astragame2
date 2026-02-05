@@ -1,6 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=JetBrains+Mono:wght@400;700&display=swap');
 @import '../styles/design.css';
 @import '../styles/animations.css';
 @import '../styles/utilities.css';
+
+:root {
+  --c-neon-cyan: #22d3ee;
+  /* Extracted from site */
+  --c-bg-dark: #000000;
+  /* Extracted from site */
+  --c-text-primary: #ffffff;
+
+  --font-primary: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --glow-cyan: 0 0 10px rgba(34, 211, 238, 0.5), 0 0 20px rgba(34, 211, 238, 0.3);
+}
 
 * {
   box-sizing: border-box;
@@ -15,7 +29,7 @@ body {
   overflow-x: hidden;
   background-color: var(--c-bg-dark);
   color: var(--c-text-primary);
-  font-family: var(--font-orbitron), sans-serif;
+  font-family: var(--font-primary);
   height: 100%;
 }
 

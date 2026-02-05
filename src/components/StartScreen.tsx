@@ -27,6 +27,15 @@ export default function StartScreen({ onStart }: StartScreenProps) {
                 <div className="absolute inset-0 bg-[var(--c-neon-cyan)]/20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
             </button>
 
+            <a
+                href="https://www.astraietm.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-mono text-[var(--c-neon-cyan)] underline opacity-60 hover:opacity-100 transition-opacity z-20 pointer-events-auto"
+            >
+                Visit Official Site: astraietm.in
+            </a>
+
             <div className="absolute bottom-8 text-xs text-gray-600 font-mono">
                 ASTRA SECURE SYSTEM v2.0
             </div>
