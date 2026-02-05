@@ -22,14 +22,7 @@ export default function GameLoop({ onGameOver }: GameLoopProps) {
             const now = Date.now();
             const currentElapsed = now - startTime;
             setElapsedTime(currentElapsed);
-
-            // const { level, spawnInterval } = getDifficulty(currentElapsed);
-
-            // Spawn logic: check if it's time to spawn a new link
-            // For MVP simplicity: we just maintain a queue. 
-            // If queue is empty or last spawn was > interval ago.
-            // We actually need a ref to track last spawn time to avoid re-renders triggering spawns
-        }, 100); // 10fps update for stats is enough
+        }, 100);
 
         return () => clearInterval(loopInterval);
     }, [startTime]);
@@ -41,13 +34,11 @@ export default function GameLoop({ onGameOver }: GameLoopProps) {
         const spawnLoop = () => {
             try {
                 const { spawnInterval } = getDifficulty(Date.now() - startTime);
-                // console.log("Spawning link...", spawnInterval); 
 
                 setLinks(prev => {
                     // Limit max links on screen to avoid chaos
                     if (prev.length >= 4) return prev;
                     const newLink = generateLink();
-                    // console.log("New Link:", newLink);
                     return [...prev, newLink];
                 });
 
@@ -61,10 +52,15 @@ export default function GameLoop({ onGameOver }: GameLoopProps) {
         return () => clearTimeout(timeoutId);
     }, []);
 
+    // Track score animation
+    const [scoreBump, setScoreBump] = useState(false);
+
     const handleTap = useCallback((id: string, isSafe: boolean) => {
-        // console.log("Tapped:", id, isSafe);
         if (isSafe) {
             setScore(s => s + 1);
+            setScoreBump(true);
+            setTimeout(() => setScoreBump(false), 300); // Reset animation class
+
             try { audioManager.play('success'); } catch (e) { console.error(e); }
             setLinks(prev => prev.filter(l => l.id !== id));
         } else {
@@ -85,13 +81,20 @@ export default function GameLoop({ onGameOver }: GameLoopProps) {
         }
     };
 
+    // Derived difficulty for visuals
+    const currentSpeedLevel = Math.floor(elapsedTime / 10000);
+    const isHighPressure = currentSpeedLevel >= 2; // Start panic mode after 20s
+
     return (
-        <div className="relative w-full h-screen overflow-hidden flex flex-col bg-gray-900/50">
+        <div className={`relative w-full h-screen overflow-hidden flex flex-col bg-gray-900/50 transition-colors duration-1000 ${isHighPressure ? 'shadow-[inset_0_0_100px_rgba(255,0,0,0.2)]' : ''}`}>
+            {/* Panic Overlay */}
+            {isHighPressure && <div className="absolute inset-0 pointer-events-none z-0 animate-panic"></div>}
+
             {/* UI Overlay */}
             <div className="flex justify-between items-center p-4 z-50 bg-black/20 backdrop-blur-sm border-b border-white/10">
                 <AstraLogo size="small" />
                 <div className="flex items-center gap-4">
-                    <div className="text-2xl font-bold font-mono text-[var(--c-neon-cyan)]">
+                    <div className={`text-2xl font-bold font-mono text-[var(--c-neon-cyan)] transition-transform ${scoreBump ? 'animate-scale-pulse' : ''}`}>
                         SCORE: {score.toString().padStart(3, '0')}
                     </div>
                     <button onClick={toggleSound} className="p-2 border border-white/20 rounded-full text-white/50 hover:text-white pointer-events-auto">
@@ -103,13 +106,13 @@ export default function GameLoop({ onGameOver }: GameLoopProps) {
             {/* Game Area */}
             <div className="flex-1 relative flex flex-col items-center justify-start pt-10 px-4 space-y-4 overflow-hidden z-10">
 
-                {/* Links container */}
+                {/* Links container (Standard List) */}
                 <div className="w-full max-w-md space-y-4 relative z-20">
                     {links.map(link => (
                         <LinkItem key={link.id} data={link} onTap={handleTap} />
                     ))}
                     {links.length === 0 && (
-                        <div className="text-white/20 animate-pulse text-center mt-10">Searching for network traffic...</div>
+                        <div className="text-white/20 animate-pulse text-center mt-10">Scanning network...</div>
                     )}
                 </div>
 

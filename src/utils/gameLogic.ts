@@ -18,11 +18,10 @@ const FAKE_LINKS = [
 ];
 
 export function generateLink(): LinkData {
-    const isSafe = Math.random() > 0.4; // 60% chance of fake link (more pressure)
-    // Actually let's make it 50/50 or logic based.
-    // Re-reading requirements: "Links appear one by one. User must TAP safe links."
-    // So safe links are the targets.
+    // 40% Chance of Safe (Target), 60% Fake
+    const isSafe = Math.random() > 0.4;
 
+    // Simple random pick
     const rawUrl = isSafe
         ? SAFE_LINKS[Math.floor(Math.random() * SAFE_LINKS.length)]
         : FAKE_LINKS[Math.floor(Math.random() * FAKE_LINKS.length)];
@@ -40,10 +39,8 @@ export function getDifficulty(elapsedTimeMs: number) {
     const level = Math.floor(elapsedTimeMs / 10000);
     // Base spawn interval 2000ms, reduce by 200ms per level, min 500ms
     const spawnInterval = Math.max(500, 2000 - (level * 200));
-    // Fall speed (animation duration)
-    const duration = Math.max(1500, 3000 - (level * 250));
 
-    return { level, spawnInterval, duration };
+    return { level, spawnInterval };
 }
 
 export function checkRank(score: number): { rank: string, emoji: string } {
