@@ -1,3 +1,4 @@
+'use client';
 
 import React, { useEffect, useState } from 'react';
 
@@ -23,7 +24,8 @@ const CyberBackground = () => {
             <div
                 className="absolute inset-0 perspective-grid opacity-60"
                 style={{
-                    transform: `translate(${mousePos.x}px, ${mousePos.y}px)`
+                    transform: `translate(${mousePos.x}px, ${mousePos.y}px)`,
+                    transition: 'transform 0.1s ease-out'
                 }}
             >
                 <div className="grid-plane"></div>
@@ -69,7 +71,8 @@ const CyberBackground = () => {
             <div
                 className="absolute inset-0 pointer-events-none opacity-40"
                 style={{
-                    transform: `translate(${mousePos.x * -0.5}px, ${mousePos.y * -0.5}px)`
+                    transform: `translate(${mousePos.x * -0.5}px, ${mousePos.y * -0.5}px)`,
+                    transition: 'transform 0.1s ease-out'
                 }}
             >
                 <div className="shape-cube w-20 h-20 top-[20%] left-[15%]"></div>
